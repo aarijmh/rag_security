@@ -5,8 +5,10 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from get_vector_db import get_vector_db
+from langchain.chat_models import openai
 
-LLM_MODEL = os.getenv('LLM_MODEL', 'mistral')
+
+LLM_MODEL = 'gpt-4o'
 
 # Function to get the prompt templates for generating alternative questions and answering based on context
 def get_prompt():
@@ -33,7 +35,7 @@ def get_prompt():
 def query(input):
     if input:
         # Initialize the language model with the specified model name
-        llm = ChatOllama(model=LLM_MODEL)
+        llm = openai.ChatCompletion.create(model=LLM_MODEL)
         # Get the vector database instance
         db = get_vector_db()
         # Get the prompt templates
